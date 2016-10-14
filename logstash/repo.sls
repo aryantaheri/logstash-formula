@@ -1,8 +1,13 @@
+{%- from 'logstash/map.jinja' import logstash with context %}
+
+{% set splitversion = logstash.version.split('.') %}
+{% set repoversion = splitversion[0] + "." + splitversion[1] %}
+
 {%- if grains['os_family'] == 'Debian' %}
 logstash-repo:
   pkgrepo.managed:
-    - humanname: Logstash 2.4 Debian Repository
-    - name: deb https://packages.elastic.co/logstash/2.4/debian stable main
+    - humanname: Logstash {{ repoversion }}.x Debian Repository
+    - name: deb https://packages.elastic.co/logstash/{{ repoversion }}/debian stable main
     - file: /etc/apt/sources.list.d/logstash.list
     - gpgcheck: 1
     - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
@@ -14,8 +19,8 @@ logstash-repo-key:
 
 logstash-repo:
   pkgrepo.managed:
-    - humanname: logstash repository for 2.4.x packages
-    - baseurl: http://packages.elasticsearch.org/logstash/2.4/centos
+    - humanname: logstash repository for {{ repoversion }}.x packages
+    - baseurl: http://packages.elasticsearch.org/logstash/{{ repoversion }}/centos
     - gpgcheck: 1
     - gpgkey: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
     - enabled: 1
