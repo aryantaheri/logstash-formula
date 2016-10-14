@@ -5,8 +5,12 @@
 {% for plugin in logstash.plugin_install %}
 logstash_plugin_{{ plugin.name }}:
   cmd.run:
-    - name: /opt/logstash/bin/plugin install --version {{ plugin.version }} {{ plugin.name }}
-    - creates: /opt/logstash/vendor/bundle/jruby/1.9/gems/{{ plugin.name }}-{{ plugin.version }}
+{% if plugin.version is defined %}
+    - name: /opt/logstash/bin/logstash-plugin install --version {{ plugin.version }} {{ plugin.name }}
+{% else %}
+    - name: /opt/logstash/bin/logstash-plugin install {{ plugin.name }}
+{% endif %}
+    - unless: /opt/logstash/bin/logstash-plugin list | grep {{ plugin.name }}
     - require:
       - pkg: logstash
 {% endfor %}
