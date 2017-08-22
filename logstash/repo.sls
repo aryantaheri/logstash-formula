@@ -7,10 +7,10 @@
 logstash-repo:
   pkgrepo.managed:
     - humanname: Logstash {{ repoversion }}.x Debian Repository
-    - name: deb https://packages.elastic.co/logstash/{{ repoversion }}/debian stable main
+    - name: deb https://artifacts.elastic.co/packages/{{ repoversion }}.x/apt stable main
     - file: /etc/apt/sources.list.d/logstash.list
     - gpgcheck: 1
-    - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    - key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 {%- elif grains['os_family'] == 'RedHat' %}
 logstash-repo-key:
   cmd.run:
