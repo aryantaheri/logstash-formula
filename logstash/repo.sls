@@ -6,7 +6,7 @@
 {%- if grains['os_family'] == 'Debian' %}
 logstash-repo:
   pkgrepo.managed:
-    - humanname: Logstash {{ repoversion }}.x Debian Repository
+    - humanname: Logstash {{ repoversion }} Debian Repository
     - name: deb https://artifacts.elastic.co/packages/{{ repoversion }}.x/apt stable main
     - file: /etc/apt/sources.list.d/logstash.list
     - gpgcheck: 1
